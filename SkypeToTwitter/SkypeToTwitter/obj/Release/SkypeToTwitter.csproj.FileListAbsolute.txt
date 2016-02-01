@@ -1,0 +1,7 @@
+C:\Users\EUG\Documents\Visual Studio 2015\Projects\SkypeToTwitter\SkypeToTwitter\bin\Release\SkypeToTwitter.exe.config
+C:\Users\EUG\Documents\Visual Studio 2015\Projects\SkypeToTwitter\SkypeToTwitter\obj\Release\Interop.SKYPE4COMLib.dll
+C:\Users\EUG\Documents\Visual Studio 2015\Projects\SkypeToTwitter\SkypeToTwitter\obj\Release\SkypeToTwitter.csproj.ResolveComReference.cache
+C:\Users\EUG\Documents\Visual Studio 2015\Projects\SkypeToTwitter\SkypeToTwitter\bin\Release\SkypeToTwitter.exe
+C:\Users\EUG\Documents\Visual Studio 2015\Projects\SkypeToTwitter\SkypeToTwitter\bin\Release\SkypeToTwitter.pdb
+C:\Users\EUG\Documents\Visual Studio 2015\Projects\SkypeToTwitter\SkypeToTwitter\obj\Release\SkypeToTwitter.exe
+C:\Users\EUG\Documents\Visual Studio 2015\Projects\SkypeToTwitter\SkypeToTwitter\obj\Release\SkypeToTwitter.pdb

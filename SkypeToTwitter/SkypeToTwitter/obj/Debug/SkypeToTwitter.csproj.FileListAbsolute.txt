@@ -1,0 +1,11 @@
+c:\users\eug\documents\visual studio 2015\Projects\SkypeToTwitter\SkypeToTwitter\bin\Debug\SkypeToTwitter.exe.config
+c:\users\eug\documents\visual studio 2015\Projects\SkypeToTwitter\SkypeToTwitter\bin\Debug\SkypeToTwitter.exe
+c:\users\eug\documents\visual studio 2015\Projects\SkypeToTwitter\SkypeToTwitter\bin\Debug\SkypeToTwitter.pdb
+c:\users\eug\documents\visual studio 2015\Projects\SkypeToTwitter\SkypeToTwitter\obj\Debug\Interop.SKYPE4COMLib.dll
+c:\users\eug\documents\visual studio 2015\Projects\SkypeToTwitter\SkypeToTwitter\obj\Debug\SkypeToTwitter.csproj.ResolveComReference.cache
+c:\users\eug\documents\visual studio 2015\Projects\SkypeToTwitter\SkypeToTwitter\obj\Debug\SkypeToTwitter.exe
+c:\users\eug\documents\visual studio 2015\Projects\SkypeToTwitter\SkypeToTwitter\obj\Debug\SkypeToTwitter.pdb
+C:\Users\EUG\Documents\Visual Studio 2015\Projects\SkypeToTwitter\SkypeToTwitter\bin\Debug\System.Data.SQLite.dll
+C:\Users\EUG\Documents\Visual Studio 2015\Projects\SkypeToTwitter\SkypeToTwitter\obj\Debug\SkypeToTwitter.csprojResolveAssemblyReference.cache
+C:\Users\EUG\Documents\Visual Studio 2015\Projects\SkypeToTwitter\SkypeToTwitter\bin\Debug\System.Data.SQLite.pdb
+C:\Users\EUG\Documents\Visual Studio 2015\Projects\SkypeToTwitter\SkypeToTwitter\bin\Debug\System.Data.SQLite.xml
