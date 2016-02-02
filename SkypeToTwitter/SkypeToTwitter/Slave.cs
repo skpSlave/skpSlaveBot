@@ -1,6 +1,7 @@
 ﻿using SKYPE4COMLib;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SkypeToTwitter
 {
@@ -24,7 +25,12 @@ namespace SkypeToTwitter
             {
                 if (trimMessage.StartsWith("-h"))
                 {
-                    answer = @"Тут будет список команд.";
+                    answer = "-w погода в Харькове" + Environment.NewLine + "-w city погода в city";
+                }
+                else if (trimMessage.StartsWith("-w"))
+                {
+                    string[] param = trimMessage.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                    answer = param.Length > 1 ? Weather.GetWeather(param[1]) : Weather.GetWeather();
                 }
                 else if (trimMessage.StartsWith("-s"))
                 {
