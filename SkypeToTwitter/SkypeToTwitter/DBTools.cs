@@ -17,7 +17,7 @@ namespace SkypeToTwitter
 
             if(!DBExist)
             {
-                ExecuteCommand(Constants.COMMAND_CREATE_TABLE);
+                ExecuteCommand(string.Format(Constants.COMMAND_CREATE_TABLE, "#ddev1l1/$sergey.yak1movich;8d73ef05f77eeae4"));
             }
         }
 
@@ -64,7 +64,7 @@ namespace SkypeToTwitter
         public static void Insert(ChatMessage message)
         {
             MessageEntity messageEnt = new MessageEntity(message);
-            ExecuteCommand(string.Format(Constants.COMMAND_INSERT_MESSAGE, messageEnt.ChatID, messageEnt.Sender, messageEnt.Message, messageEnt.Timestamp));
+            ExecuteCommand(string.Format(Constants.COMMAND_INSERT_MESSAGE, "Chat_#ddev1l1/$sergey.yak1movich;8d73ef05f77eeae4", messageEnt.ChatID, messageEnt.Sender, messageEnt.Message, messageEnt.Timestamp));
         }
     }
 }

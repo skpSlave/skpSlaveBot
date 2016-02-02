@@ -17,19 +17,20 @@ namespace SkypeToTwitter
 
         public static string GetWeather(string cityName)
         {
-            StringBuilder result = new StringBuilder();
+            string result = string.Empty;
 
             WeatherEnity weather = WeatherParser.GetCurrent(cityName);
 
-            result.AppendLine("Погода в: ");
-            result.Append(weather.CityName);
-            result.Append(", ");
-            result.Append(weather.CountryName);
-            result.Append(Environment.NewLine);
-            result.AppendLine("Температура: ");
-            result.Append(weather.Temperature);
+            if (weather.Error)
+            {
+                result = "(shake)";
+            }
+            else
+            {
+                result = string.Format("Погода в: {0}, {1}{2}Температура: {3} °C", weather.CityName, weather.CountryName, Environment.NewLine, weather.Temperature);
+            }
 
-            return result.ToString();
+            return result;
         }
     }
 
@@ -38,6 +39,7 @@ namespace SkypeToTwitter
         public string CityName { get; set; }
         public string CountryName { get; set; }
         public string Temperature { get; set; }
+        public bool Error = false;
     }
 
     public static class WeatherParser
@@ -51,7 +53,10 @@ namespace SkypeToTwitter
             string apiResult = CallRestMethod(UrlCurrent, cityName);
 
             if (String.IsNullOrEmpty(apiResult) || apiResult.Contains("Error"))
+            {
+                wn.Error = true;
                 return wn;
+            }
 
             XDocument doc = XDocument.Parse(apiResult);
 
@@ -92,7 +97,7 @@ namespace SkypeToTwitter
             HttpWebResponse webresponse;
             try
             {
-                webresponse = (HttpWebResponse) webrequest.GetResponse();
+                webresponse = (HttpWebResponse)webrequest.GetResponse();
             }
             catch
             {

@@ -8,7 +8,7 @@ namespace SkypeToTwitter
 {
     public static class Constants
     {
-        public static string COMMAND_CREATE_TABLE = @"CREATE TABLE [Messages]
+        public static string COMMAND_CREATE_TABLE = @"CREATE TABLE [Chat_{0}]
                                                         (
                                                           [ID] integer PRIMARY KEY AUTOINCREMENT NOT NULL,
                                                           [ChatID] text NOT NULL,
@@ -18,7 +18,6 @@ namespace SkypeToTwitter
                                                           [TwitterID] text
                                                         );";
 
-        public static string COMMAND_INSERT_MESSAGE = @"INSERT INTO Messages (ChatID, Sender, Message, Timestamp)
-                                                       VALUES ('{0}', '{1}', '{2}', '{3}')";
+        public static string COMMAND_INSERT_MESSAGE = @"INSERT INTO [{0}] (ChatID, Sender, Message, Timestamp) VALUES ('{1}', '{2}', '{3}', '{4}')";
     }
 }
