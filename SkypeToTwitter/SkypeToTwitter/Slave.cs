@@ -1,6 +1,7 @@
 ﻿using SKYPE4COMLib;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SkypeToTwitter
 {
@@ -20,21 +21,21 @@ namespace SkypeToTwitter
         {
             answer = String.Empty;
             string trimMessage = message.Body.Trim();
-            if (trimMessage.StartsWith("-"))
-            {
-                if (trimMessage.StartsWith("-h"))
-                {
-                    answer = @"Тут будет список команд.";
-                }
-                else if (trimMessage.StartsWith("-s"))
-                {
-                    answer = answers[r.Next(0, answers.Count - 1)];
-                }
-                else
-                {
-                    answer = @"Даже не знаю, что сказать...";
-                }
 
+            if (trimMessage.StartsWith("-h"))
+            {
+                answer = "-w погода в Харькове" + Environment.NewLine + "-w city погода в city";
+                return false;
+            }
+            else if (trimMessage.StartsWith("-w"))
+            {
+                string[] param = trimMessage.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                answer = param.Length > 1 ? Weather.GetWeather(param[1]) : Weather.GetWeather();
+                return false;
+            }
+            else if (trimMessage.StartsWith("-s"))
+            {
+                answer = answers[r.Next(0, answers.Count - 1)];
                 return false;
             }
 
