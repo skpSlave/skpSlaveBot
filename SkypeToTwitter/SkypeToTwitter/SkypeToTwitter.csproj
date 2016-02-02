@@ -70,6 +70,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SkypeTools.cs" />
     <Compile Include="Slave.cs" />
+    <Compile Include="Weather.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
