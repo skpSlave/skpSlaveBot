@@ -15,6 +15,11 @@ namespace SkypeToTwitter
             {
                 try
                 {
+                    if (!skype.Client.IsRunning)
+                    {
+                        skype.Client.Start(true, true);
+                    }
+
                     skype.MessageStatus += OnMessageReceived;
                     skype.Attach(7, true);
                     Console.WriteLine("skype attached");
@@ -28,10 +33,13 @@ namespace SkypeToTwitter
 
         private static void OnMessageReceived(ChatMessage pMessage, TChatMessageStatus status)
         {
+            Console.WriteLine(pMessage.Body);
+
             if (status == TChatMessageStatus.cmsReceived)
             {
                 Console.WriteLine(pMessage.Body);
                 string answer = string.Empty;
+
                 if (Slave.HandleMessage(pMessage, out answer))
                 {
                     DBTools.Insert(pMessage);
