@@ -33,6 +33,12 @@ namespace SkypeToTwitter
                 answer = param.Length > 1 ? Weather.GetWeather(param[1]) : Weather.GetWeather();
                 return false;
             }
+            else if (trimMessage.StartsWith("-n"))
+            {
+                string[] param = trimMessage.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                answer = param.Length > 1 ? "Иди как ты нахер, " + param[1] +"!" : "Нахер все это!";
+                return false;
+            }
             else if (trimMessage.StartsWith("-s"))
             {
                 answer = answers[r.Next(0, answers.Count - 1)];
