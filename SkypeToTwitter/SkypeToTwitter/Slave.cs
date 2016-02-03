@@ -24,16 +24,44 @@ namespace SkypeToTwitter
 
             if (trimMessage.StartsWith("-h"))
             {
-                answer = "-w погода в Харькове" + Environment.NewLine + "-w city погода в city";
+                answer = "-w погода в Харькове" + Environment.NewLine + "-w [city] погода в [city]";
                 return false;
             }
-            else if (trimMessage.StartsWith("-w"))
+            if (trimMessage.StartsWith("-w"))
             {
                 string[] param = trimMessage.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
                 answer = param.Length > 1 ? Weather.GetWeather(param[1]) : Weather.GetWeather();
                 return false;
             }
-            else if (trimMessage.StartsWith("-s"))
+            if (trimMessage.StartsWith("-n"))
+            {
+                string[] param = trimMessage.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                if (param.Length > 1)
+                {
+                    string secondParam = param[1];
+                    string secondParamLowered = secondParam.ToLower();
+
+                    if (!secondParamLowered.Contains("раст") && !secondParam.Contains("rast") &&
+                        !secondParam.Contains("паш") && !secondParam.Contains("pash"))
+                    {
+                        answer = "Иди ка ты нахер, " + secondParam + "!";
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    answer = "Нахер все это!";
+                    return true;
+                }
+
+
+                return false;
+            }
+            if (trimMessage.StartsWith("-s"))
             {
                 answer = answers[r.Next(0, answers.Count - 1)];
                 return false;
