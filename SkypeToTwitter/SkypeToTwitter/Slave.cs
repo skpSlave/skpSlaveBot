@@ -14,31 +14,56 @@ namespace SkypeToTwitter
             @"Зачем?",
             @"5$",
             @"Нет, спасибо",
+            @"."
         };
 
         public static bool HandleMessage(ChatMessage message, out string answer)
         {
             answer = String.Empty;
+            bool insertToBase = true;
+
             string trimMessage = message.Body.Trim();
-            if (trimMessage.StartsWith("-"))
+
+            if (trimMessage == "-h")
             {
-                if (trimMessage.StartsWith("-h"))
-                {
-                    answer = @"Тут будет список команд.";
-                }
+                answer = "-w - погода в Харькове" + Environment.NewLine + "-w [city] - погода в [city]";
+                insertToBase = false;
+            }
                 else if (trimMessage.StartsWith("-s"))
+            {
+                string[] param = trimMessage.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                answer = param.Length > 1 ? Weather.GetWeather(param[1]) : Weather.GetWeather();
+                insertToBase = false;
+            }
+            if (trimMessage.StartsWith("-n"))
+            {
+                string[] param = trimMessage.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                if (param.Length > 1)
                 {
-                    answer = answers[r.Next(0, answers.Count - 1)];
+                    string secondParam = param[1];
+                    string secondParamLowered = secondParam.ToLower();
+
+                    if (!secondParamLowered.Contains("раст") && !secondParam.Contains("rast") &&
+                        !secondParam.Contains("паш") && !secondParam.Contains("pash"))
+                    {
+                        answer = "Иди ка ты нахер, " + secondParam + "!";
+                        insertToBase = false;
+                    }
+                    else
+                    {
+                        insertToBase = false;
+                    }
                 }
                 else
                 {
-                    answer = @"Даже не знаю, что сказать...";
+                    answer = "Нахер все это!";
+                    return false;
                 }
 
-                return false;
-            }
+            if (String.IsNullOrEmpty(answer))
+                answer = "(shake)";
 
-            return true;
+            return insertToBase;
         }
     }
 }
