@@ -21,11 +21,7 @@ namespace SkypeToTwitter
 
             WeatherEnity weather = WeatherParser.GetCurrent(cityName);
 
-            if (weather.Error)
-            {
-                result = "(shake)";
-            }
-            else
+            if (!weather.Error)
             {
                 result = string.Format("Погода в: {0}, {1}{2}Температура: {3} °C", weather.CityName, weather.CountryName, Environment.NewLine, weather.Temperature);
             }

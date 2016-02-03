@@ -33,7 +33,7 @@ namespace SkypeToTwitter
 
         private static void OnMessageReceived(ChatMessage pMessage, TChatMessageStatus status)
         {
-            Console.WriteLine("[{0}] [{1}]", pMessage.Sender.FullName, pMessage.Body.Replace(Environment.NewLine, ""));
+            Console.WriteLine("[{0}] [{1}] [{2}]", DateTime.Now.ToString("hh:mm:ss"), pMessage.Sender.FullName, pMessage.Body.Replace(Environment.NewLine, ""));
 
             if (status == TChatMessageStatus.cmsReceived)
             {

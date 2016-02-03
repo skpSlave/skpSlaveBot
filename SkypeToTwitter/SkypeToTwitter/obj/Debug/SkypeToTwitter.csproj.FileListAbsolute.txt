@@ -19,7 +19,6 @@ D:\GIT\skpSlave\SkypeToTwitter\SkypeToTwitter\bin\Debug\SkypeToTwitter.pdb
 D:\GIT\skpSlave\SkypeToTwitter\SkypeToTwitter\bin\Debug\System.Data.SQLite.dll
 D:\GIT\skpSlave\SkypeToTwitter\SkypeToTwitter\bin\Debug\System.Data.SQLite.pdb
 D:\GIT\skpSlave\SkypeToTwitter\SkypeToTwitter\bin\Debug\System.Data.SQLite.xml
-D:\GIT\skpSlave\SkypeToTwitter\SkypeToTwitter\obj\Debug\SkypeToTwitter.csprojResolveAssemblyReference.cache
 D:\GIT\skpSlaveBot\SkypeToTwitter\SkypeToTwitter\bin\Debug\SkypeToTwitter.exe.config
 D:\GIT\skpSlaveBot\SkypeToTwitter\SkypeToTwitter\obj\Debug\Interop.SKYPE4COMLib.dll
 D:\GIT\skpSlaveBot\SkypeToTwitter\SkypeToTwitter\obj\Debug\SkypeToTwitter.csproj.ResolveComReference.cache

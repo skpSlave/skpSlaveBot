@@ -9,7 +9,10 @@ namespace SkypeToTwitter
             DBTools.Connect();
             SkypeTools.Connect();
 
-            while (true);
+            while (true)
+            {
+                Thread.Sleep(1000);
+            }
         }
     }
 }
