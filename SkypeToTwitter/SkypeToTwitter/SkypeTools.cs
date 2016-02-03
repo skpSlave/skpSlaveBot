@@ -33,11 +33,10 @@ namespace SkypeToTwitter
 
         private static void OnMessageReceived(ChatMessage pMessage, TChatMessageStatus status)
         {
-            Console.WriteLine(pMessage.Body);
+            Console.WriteLine("[{0}] [{1}]", pMessage.Sender.FullName, pMessage.Body.Replace(Environment.NewLine, ""));
 
             if (status == TChatMessageStatus.cmsReceived)
             {
-                Console.WriteLine(pMessage.Body);
                 string answer = string.Empty;
 
                 if (Slave.HandleMessage(pMessage, out answer))
