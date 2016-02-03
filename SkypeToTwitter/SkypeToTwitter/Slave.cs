@@ -15,6 +15,7 @@ namespace SkypeToTwitter
             @"Зачем?",
             @"5$",
             @"Нет, спасибо",
+            @"."
         };
 
         public static bool HandleMessage(ChatMessage message, out string answer)
@@ -45,26 +46,19 @@ namespace SkypeToTwitter
                         !secondParam.Contains("паш") && !secondParam.Contains("pash"))
                     {
                         answer = "Иди ка ты нахер, " + secondParam + "!";
-                        return true;
+                        return false;
                     }
                     else
                     {
+                        answer = "(shake)";
                         return false;
                     }
                 }
                 else
                 {
                     answer = "Нахер все это!";
-                    return true;
+                    return false;
                 }
-
-
-                return false;
-            }
-            if (trimMessage.StartsWith("-s"))
-            {
-                answer = answers[r.Next(0, answers.Count - 1)];
-                return false;
             }
 
             return true;
