@@ -15,8 +15,15 @@ namespace SkypeToTwitter
             {
                 try
                 {
+                    if (!skype.Client.IsRunning)
+                    {
+                        skype.Client.Start(true, true);
+                    }
+
                     skype.MessageStatus += OnMessageReceived;
-                    skype.Attach(5, true);
+
+                    skype.Attach(7, true);
+
                     Console.WriteLine("skype attached");
                 }
                 catch (Exception ex)
@@ -24,19 +31,21 @@ namespace SkypeToTwitter
                     Console.WriteLine("top lvl exception : " + ex.ToString());
                 }
 
-                while (true)
-                {
-                    Thread.Sleep(1000);
-                }
+                //while (true)
+                //{
+                //    Thread.Sleep(1000);
+                //}
             });
         }
 
         private static void OnMessageReceived(ChatMessage pMessage, TChatMessageStatus status)
         {
+            Console.WriteLine(pMessage.Body);
+
             if (status == TChatMessageStatus.cmsReceived)
             {
-                Console.WriteLine(pMessage.Body);
                 string answer = string.Empty;
+
                 if (Slave.HandleMessage(pMessage, out answer))
                 {
                     DBTools.Insert(pMessage);

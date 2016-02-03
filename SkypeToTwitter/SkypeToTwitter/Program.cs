@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 
 namespace SkypeToTwitter
 {
@@ -9,10 +10,12 @@ namespace SkypeToTwitter
             DBTools.Connect();
             SkypeTools.Connect();
 
-            while (true)
-            {
-                Thread.Sleep(1000);
-            }
+            //while (true)
+            //{
+            //    Thread.Sleep(1000);
+            //}
+
+            Console.ReadKey();
         }
     }
 }
