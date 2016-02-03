@@ -16,17 +16,12 @@ namespace SkypeToTwitter
                 try
                 {
                     skype.MessageStatus += OnMessageReceived;
-                    skype.Attach(5, true);
+                    skype.Attach(7, true);
                     Console.WriteLine("skype attached");
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine("top lvl exception : " + ex.ToString());
-                }
-
-                while (true)
-                {
-                    Thread.Sleep(1000);
                 }
             });
         }
