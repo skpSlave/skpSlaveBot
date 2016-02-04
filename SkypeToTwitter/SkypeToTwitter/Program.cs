@@ -11,7 +11,7 @@ namespace SkypeToTwitter
 
             while (true)
             {
-                Thread.Sleep(500);
+                Thread.Sleep(300);
             }
         }
     }
