@@ -3,27 +3,41 @@ using System.Configuration;
 using System.Data;
 using System.Data.SQLite;
 using System.IO;
+using System;
+using System.Collections.Generic;
 
 namespace SkypeToTwitter
 {
+    //[Table]
+    //public class ChatTable
+    //{
+    //    [PrimaryKey]
+    //    public Int32 ID { get; set; }
+    //    [Field]
+    //    public String ChatID { get; set; }
+    //    [Field]
+    //    public String Sender { get; set; }
+    //    [Field]
+    //    public String Message { get; set; }
+    //    [Field]
+    //    public String Timestamp { get; set; }
+    //    [Field]
+    //    public String TwitterID { get; set; }
+    //}
+
     public static class DBTools
     {
         private static string ConnectionString;
+        private static List<string> _tables;
 
         public static void Connect()
         {
-            bool DBExist;
-            ConnectionString = GetConnectionString(out DBExist);
-
-            if(!DBExist)
-            {
-                ExecuteCommand(Constants.COMMAND_CREATE_TABLE);
-            }
+            _tables = new List<string>();
+            ConnectionString = GetConnectionString();
         }
 
-        private static string GetConnectionString(out bool exist)
+        private static string GetConnectionString()
         {
-            exist = true;
             string DBName = ConfigurationManager.ConnectionStrings["DBName"].ConnectionString;
             string DBPath = ConfigurationManager.ConnectionStrings["DBPath"].ConnectionString;
             string FullDBPath = Path.Combine(DBPath, DBName);
@@ -35,7 +49,6 @@ namespace SkypeToTwitter
 
             if (!File.Exists(FullDBPath))
             {
-                exist = false;
                 SQLiteConnection.CreateFile(FullDBPath);
             }
 
@@ -61,10 +74,20 @@ namespace SkypeToTwitter
             }
         }
 
-        public static void Insert(ChatMessage message)
+        public static void InsertMessage(ChatMessage message)
         {
+            CreateTable(message);
             MessageEntity messageEnt = new MessageEntity(message);
             ExecuteCommand(string.Format(Constants.COMMAND_INSERT_MESSAGE, messageEnt.ChatID, messageEnt.Sender, messageEnt.Message, messageEnt.Timestamp));
+        }
+
+        public static void CreateTable(ChatMessage message)
+        {
+            if (!_tables.Contains(message.Chat.Name))
+            {
+                _tables.Add(message.Chat.Name);
+                ExecuteCommand(String.Format(Constants.COMMAND_CREATE_TABLE, message.Chat.Name));
+            }
         }
     }
 }

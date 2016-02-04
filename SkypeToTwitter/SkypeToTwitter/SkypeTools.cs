@@ -21,7 +21,7 @@ namespace SkypeToTwitter
                     }
 
                     skype.MessageStatus += OnMessageReceived;
-                    skype.Attach(7, true);
+                    skype.Attach(7, false);
                     Console.WriteLine("skype attached");
                 }
                 catch (Exception ex)
@@ -40,7 +40,7 @@ namespace SkypeToTwitter
                 string answer = string.Empty;
                 if (Slave.HandleMessage(pMessage, out answer))
                 {
-                    DBTools.Insert(pMessage);
+                    DBTools.InsertMessage(pMessage);
                 }
                 else
                 {

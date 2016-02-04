@@ -6,17 +6,6 @@ namespace SkypeToTwitter
 {
     public static class Slave
     {
-        private static Random r = new Random();
-        private static List<string> answers = new List<string>()
-        {
-            @"Ололо пыщь пыщь я вам скажу",
-            @"Да иди ты!",
-            @"Зачем?",
-            @"5$",
-            @"Нет, спасибо",
-            @"."
-        };
-
         public static bool HandleMessage(ChatMessage message, out string answer)
         {
             answer = String.Empty;
@@ -29,13 +18,13 @@ namespace SkypeToTwitter
                 answer = "-w - погода в Харькове" + Environment.NewLine + "-w [city] - погода в [city]";
                 insertToBase = false;
             }
-                else if (trimMessage.StartsWith("-s"))
+            else if (trimMessage.StartsWith("-w"))
             {
                 string[] param = trimMessage.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
                 answer = param.Length > 1 ? Weather.GetWeather(param[1]) : Weather.GetWeather();
                 insertToBase = false;
             }
-            if (trimMessage.StartsWith("-n"))
+            else if(trimMessage.StartsWith("-n"))
             {
                 string[] param = trimMessage.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
                 if (param.Length > 1)
@@ -56,11 +45,11 @@ namespace SkypeToTwitter
                 }
                 else
                 {
-                    answer = "Нахер все это!";
-                    return false;
+                    insertToBase = false;
                 }
+            }
 
-            if (String.IsNullOrEmpty(answer))
+            if (String.IsNullOrEmpty(answer) && !insertToBase)
                 answer = "(shake)";
 
             return insertToBase;
