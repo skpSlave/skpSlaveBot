@@ -45,7 +45,7 @@ namespace SkypeToTwitter
             for (int i = 1; i <= c; i++)
             {
                 Console.Clear();
-                Console.WriteLine("Removing unreaded messages: {0} from {1}", i, c);
+                Console.WriteLine("Removing unread messages: {0} from {1}", i, c);
                 try { skype.MissedMessages[i].Seen = true; }
                 catch { }
             }
