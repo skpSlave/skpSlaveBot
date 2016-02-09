@@ -73,7 +73,8 @@ namespace SkypeToTwitter
 
             }
 
-            pMessage.Seen = true;
+            if (status != TChatMessageStatus.cmsSent && status != TChatMessageStatus.cmsSending)
+                pMessage.Seen = true;
         }
 
         public static object _lock = new object();
