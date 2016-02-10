@@ -13,44 +13,26 @@ namespace SkypeToTwitter
 
             string trimMessage = message.Body.Trim();
 
-            if (trimMessage == "-h")
+            if(trimMessage.StartsWith("!"))
             {
-                answer = "-w - погода в Харькове" + Environment.NewLine + "-w [city] - погода в [city]";
                 insertToBase = false;
             }
+            //show help description
+            else if (trimMessage == "-h")
+            {
+                answer = Constants.HELP_DESCRIPTION;
+                insertToBase = false;
+            }
+            //show current weather
             else if (trimMessage.StartsWith("-w"))
             {
                 string[] param = trimMessage.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
                 answer = param.Length > 1 ? Weather.GetWeather(param[1]) : Weather.GetWeather();
                 insertToBase = false;
             }
-            else if(trimMessage.StartsWith("-n"))
-            {
-                string[] param = trimMessage.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                if (param.Length > 1)
-                {
-                    string secondParam = param[1];
-                    string secondParamLowered = secondParam.ToLower();
 
-                    if (!secondParamLowered.Contains("раст") && !secondParam.Contains("rast") &&
-                        !secondParam.Contains("паш") && !secondParam.Contains("pash"))
-                    {
-                        answer = "Иди ка ты нахер, " + secondParam + "!";
-                        insertToBase = false;
-                    }
-                    else
-                    {
-                        insertToBase = false;
-                    }
-                }
-                else
-                {
-                    insertToBase = false;
-                }
-            }
-
-            if (String.IsNullOrEmpty(answer) && !insertToBase)
-                answer = "(shake)";
+            if (!insertToBase && String.IsNullOrEmpty(answer))
+                answer = Constants.DEFAULT_ANSWER;
 
             return insertToBase;
         }
