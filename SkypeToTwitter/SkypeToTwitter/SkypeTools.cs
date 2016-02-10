@@ -62,7 +62,7 @@ namespace SkypeToTwitter
                 {
                     DBTools.InsertMessage(pMessage);
                 }
-                else
+                else if(!String.IsNullOrEmpty(answer))
                 {
                     SendMessage(answer, pMessage);
                 }

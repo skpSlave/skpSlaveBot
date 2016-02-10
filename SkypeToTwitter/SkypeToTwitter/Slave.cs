@@ -15,7 +15,7 @@ namespace SkypeToTwitter
 
             if(trimMessage.StartsWith("!"))
             {
-                insertToBase = false;
+                return false;
             }
             //show help description
             else if (trimMessage == "-h")
