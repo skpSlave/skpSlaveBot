@@ -2,81 +2,20 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Timers;
 
 namespace SkypeToTwitter
 {
     static class SkypeTools
     {
         private static Skype skype = new Skype();
-        private static System.Timers.Timer _checkMissedMessagesTimer;
 
         public static void Connect()
         {
-            Task.Run(delegate
-            {
-                try
-                {
-                    if (!skype.Client.IsRunning)
-                    {
-                        skype.Client.Start(true, true);
-                    }
-
-                    skype.MessageStatus += OnMessageReceived;
-                    skype.Attach(7, true);
-
-                    RemoveUnreadedMessages();
-
-                    Console.WriteLine("skype attached");
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("top lvl exception : " + ex.ToString());
-                }
-            });
-
-            SetTimerForMissedMessages(10000);
+            ConnectToSkype();
+            StartCheckingMissedMessages();
         }
 
-        private static void RemoveUnreadedMessages()
-        {
-            int c = skype.MissedMessages.Count;
-
-            for (int i = 1; i <= c; i++)
-            {
-                Console.Clear();
-                Console.WriteLine("Removing unread messages: {0} from {1}", i, c);
-                try { skype.MissedMessages[i].Seen = true; }
-                catch { }
-            }
-        }
-
-        private static void OnMessageReceived(ChatMessage pMessage, TChatMessageStatus status)
-        {
-            if (status == TChatMessageStatus.cmsReceived)
-            {
-                Console.WriteLine("[{0}] [{1}] [{2}]", DateTime.Now.ToString("hh:mm:ss"), pMessage.Sender.FullName, pMessage.Body.Replace(Environment.NewLine, " |"));
-
-                string answer = string.Empty;
-                if (Slave.HandleMessage(pMessage, out answer))
-                {
-                    DBTools.InsertMessage(pMessage);
-                }
-                else if(!String.IsNullOrEmpty(answer))
-                {
-                    SendMessage(answer, pMessage);
-                }
-            }
-            else if (status == TChatMessageStatus.cmsSent)
-            {
-                Console.WriteLine("[{0}] Bot [{1}]", DateTime.Now.ToString("hh:mm:ss"), pMessage.Body.Replace(Environment.NewLine, " |"));
-
-            }
-
-            if (status != TChatMessageStatus.cmsSent && status != TChatMessageStatus.cmsSending)
-                pMessage.Seen = true;
-        }
-
+        #region Public
         public static object _lock = new object();
         public static void SendMessage(string message, ChatMessage pMessage)
         {
@@ -99,37 +38,100 @@ namespace SkypeToTwitter
                 }
             }
         }
+        #endregion
 
-        private static void CheckMissedMessages(Object source, ElapsedEventArgs e)
+        #region Private
+        private static void RemoveUnreadedMessages()
         {
-            _checkMissedMessagesTimer.Enabled = false;
             int c = skype.MissedMessages.Count;
 
-            if (c > 0)
+            for (int i = 1; i <= c; i++)
             {
-                Console.WriteLine("-----------------------------[{0}]-----------------------------", c);
+                Console.Clear();
+                Console.WriteLine("Removing unread messages: {0} from {1}", i, c);
+                try { skype.MissedMessages[i].Seen = true; }
+                catch { }
+            }
+        }
 
-                for (int i = 1; i <= c; i++)
+        private static void ConnectToSkype()
+        {
+            Task.Run(delegate
+            {
+                try
                 {
-                    try
+                    if (!skype.Client.IsRunning)
                     {
-                        OnMessageReceived(skype.MissedMessages[i], TChatMessageStatus.cmsReceived);
+                        skype.Client.Start(true, true);
                     }
-                    catch { }
-                }
 
-                Console.WriteLine("Missed messages checked");
+                    skype.MessageStatus += OnMessageReceived;
+                    skype.Attach(7, true);
+
+                    RemoveUnreadedMessages();
+
+                    Extentions.ConsoleWriteLine("Skype attached", ConsoleColor.Green);
+                }
+                catch (Exception ex)
+                {
+                    Extentions.ConsoleWriteLine("Top lvl exception: " + ex.ToString(), ConsoleColor.Red);
+                }
+            });
+        }
+
+        private static void StartCheckingMissedMessages()
+        {
+            Task.Run(delegate
+            {
+                while (true)
+                {
+                    int c = skype.MissedMessages.Count;
+
+                    if (c > 0)
+                    {
+                        Console.WriteLine("-----------------------------[{0}]-----------------------------", c);                                           
+
+                        for (int i = 1; i <= c; i++)
+                        {
+                            try
+                            {
+                                OnMessageReceived(skype.MissedMessages[i], TChatMessageStatus.cmsReceived);
+                            }
+                            catch { }
+                        }
+
+                        Console.WriteLine("------------------[Missed messages checked]------------------");
+                    }
+
+                    Thread.Sleep(10000);
+                }
+            });
+        }
+
+        private static void OnMessageReceived(ChatMessage pMessage, TChatMessageStatus status)
+        {
+            if (status == TChatMessageStatus.cmsReceived)
+            {
+                Console.WriteLine("[{0}] [{1}] [{2}]", DateTime.Now.ToString("hh:mm:ss"), pMessage.Sender.FullName, pMessage.Body.Replace(Environment.NewLine, " |"));
+
+                string answer = string.Empty;
+                if (Slave.HandleMessage(pMessage, out answer))
+                {
+                    DBTools.InsertMessage(pMessage);
+                }
+                else if (!String.IsNullOrEmpty(answer))
+                {
+                    SendMessage(answer, pMessage);
+                }
+            }
+            else if (status == TChatMessageStatus.cmsSent)
+            {
+                Console.WriteLine("[{0}] Bot [{1}]", DateTime.Now.ToString("hh:mm:ss"), pMessage.Body.Replace(Environment.NewLine, " |"));
             }
 
-            _checkMissedMessagesTimer.Enabled = true;
+            if (status != TChatMessageStatus.cmsSent && status != TChatMessageStatus.cmsSending)
+                pMessage.Seen = true;
         }
-
-        private static void SetTimerForMissedMessages(int interval)
-        {
-            _checkMissedMessagesTimer = new System.Timers.Timer(interval);
-            _checkMissedMessagesTimer.Elapsed += CheckMissedMessages;
-            _checkMissedMessagesTimer.AutoReset = true;
-            _checkMissedMessagesTimer.Enabled = true;
-        }
+        #endregion
     }
 }

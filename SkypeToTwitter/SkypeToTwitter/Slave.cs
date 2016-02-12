@@ -1,6 +1,5 @@
 ﻿using SKYPE4COMLib;
 using System;
-using System.Collections.Generic;
 
 namespace SkypeToTwitter
 {
