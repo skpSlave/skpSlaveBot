@@ -7,10 +7,12 @@ namespace SkypeToTwitter
 {
     static class SkypeTools
     {
+        private static bool _silentMode = false;
         private static Skype skype = new Skype();
 
-        public static void Connect()
+        public static void Connect(bool silent)
         {
+            _silentMode = silent;
             ConnectToSkype();
             StartCheckingMissedMessages();
         }
@@ -19,21 +21,24 @@ namespace SkypeToTwitter
         public static object _lock = new object();
         public static void SendMessage(string message, ChatMessage pMessage)
         {
-            lock (_lock)
+            if (!_silentMode)
             {
-                try
-                {
-                    pMessage.Chat.SendMessage(message);
-                }
-                catch
+                lock (_lock)
                 {
                     try
                     {
-                        skype.get_Chat(pMessage.ChatName).SendMessage(message);
+                        pMessage.Chat.SendMessage(message);
                     }
                     catch
                     {
-                        skype.SendMessage(pMessage.ChatName, message);
+                        try
+                        {
+                            skype.get_Chat(pMessage.ChatName).SendMessage(message);
+                        }
+                        catch
+                        {
+                            skype.SendMessage(pMessage.ChatName, message);
+                        }
                     }
                 }
             }
