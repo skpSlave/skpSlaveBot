@@ -7,7 +7,7 @@ namespace SkypeToTwitter
 {
     static class ConsoleCommandsHandler
     {
-        private static Stopwatch upTime = new Stopwatch();
+        public static Stopwatch upTime = new Stopwatch();
 
         public static void Initialize()
         {

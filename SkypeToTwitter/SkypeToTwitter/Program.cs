@@ -7,7 +7,7 @@
             ConsoleCommandsHandler.Initialize();
 
             DBTools.Connect();
-            SkypeTools.Connect(args.Length > 0 && args[0] == "-silent");
+            SkypeTools.Connect(args.Length > 0 && args[0] == Constants.SILENT_MODE);
 
             while (!ConsoleCommandsHandler.ExitCommand()) { }
         }

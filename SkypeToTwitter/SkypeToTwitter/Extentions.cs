@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 
 namespace SkypeToTwitter
 {
@@ -10,6 +11,15 @@ namespace SkypeToTwitter
             Console.ForegroundColor = color;
             Console.WriteLine(value);
             Console.ForegroundColor = prevColor;
+        }
+
+        public static string ConvertEngToRus(this string input)
+        {
+            var result = new StringBuilder(input.Length);
+            int index;
+            foreach (var symbol in input)
+                result.Append((index = Constants.ENGLISH_CHARS.IndexOf(symbol)) != -1 ? Constants.RUSSIAN_CHARS[index] : symbol);
+            return result.ToString();
         }
     }
 }

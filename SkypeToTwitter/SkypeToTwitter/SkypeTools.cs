@@ -14,6 +14,7 @@ namespace SkypeToTwitter
         {
             _silentMode = silent;
             ConnectToSkype();
+            RemoveUnreadedMessages();
             StartCheckingMissedMessages();
         }
 
@@ -73,8 +74,6 @@ namespace SkypeToTwitter
                     skype.MessageStatus += OnMessageReceived;
                     skype.Attach(7, true);
 
-                    RemoveUnreadedMessages();
-
                     Extentions.ConsoleWriteLine("Skype attached", ConsoleColor.Green);
                 }
                 catch (Exception ex)
@@ -108,7 +107,7 @@ namespace SkypeToTwitter
                         Console.WriteLine("------------------[Missed messages checked]------------------");
                     }
 
-                    Thread.Sleep(10000);
+                    Thread.Sleep(8000);
                 }
             });
         }
@@ -124,7 +123,8 @@ namespace SkypeToTwitter
                 {
                     DBTools.InsertMessage(pMessage);
                 }
-                else if (!String.IsNullOrEmpty(answer))
+
+                if (!String.IsNullOrEmpty(answer))
                 {
                     SendMessage(answer, pMessage);
                 }
