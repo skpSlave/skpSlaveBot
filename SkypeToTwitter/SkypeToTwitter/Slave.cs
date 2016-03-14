@@ -41,8 +41,10 @@ namespace SkypeToTwitter
                 insertToBase = false;
             }
 
-            if (NeedToSwitchLanguage(trimMessage.Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries).ToList()) &&
-                !trimMessage.Contains("http") && !trimMessage.Contains("www"))
+            //language switcher
+            if (Constants.LANGUAGE_SWITCHER_MODE_ENABLED && Constants.WordsDict.Count > 0 &&
+                NeedToSwitchLanguage(trimMessage.Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries).ToList()) &&
+                !trimMessage.Contains("http") && !trimMessage.Contains("www") && trimMessage != "-w" && trimMessage != "-h")
             {
                 answer = trimMessage.ConvertEngToRus();
             }
@@ -56,17 +58,23 @@ namespace SkypeToTwitter
         private static bool NeedToSwitchLanguage(List<string> parsedMessage)
         {
             int wordsCount = parsedMessage.Count;
+            int containsCount = 0;
             int matchCount = 0;
 
             foreach (string word in parsedMessage)
             {
-                if (Constants.dict.Where(x => word.Contains(x)).Count() > 0)
+                if (Constants.WordsDict.Where(x => word.IndexOf(x, StringComparison.OrdinalIgnoreCase) > 0).Count() > 0)
+                {
+                    containsCount += 1;
+                }
+
+                if (Constants.WordsDict.Where(x => word == x || word == x + "&" || word == x + "?" || word == x + "/").Count() > 0)
                 {
                     matchCount += 1;
                 }
             }
 
-            return (matchCount * 100) / wordsCount > 60;
+            return (matchCount * 100) / wordsCount > 0 ? (containsCount * 100) / wordsCount > 90 : false;
         }
     }
 }
