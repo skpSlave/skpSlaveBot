@@ -74,7 +74,7 @@ namespace SkypeToTwitter
                     skype.MessageStatus += OnMessageReceived;
                     skype.Attach(7, true);
 
-                    Extentions.ConsoleWriteLine("Skype attached", ConsoleColor.Green);
+                    Extentions.ConsoleWriteLine("Skype connected", ConsoleColor.Green);
                 }
                 catch (Exception ex)
                 {
@@ -121,7 +121,14 @@ namespace SkypeToTwitter
                 string answer = string.Empty;
                 if (Slave.HandleMessage(pMessage, out answer))
                 {
-                    DBTools.InsertMessage(pMessage);
+                    MessageEntity messageEnt = new MessageEntity(pMessage);
+
+                    DBTools.InsertMessage(messageEnt);
+
+                    if (messageEnt.Secure)
+                    {
+                        TwitterTools.SendMessage(messageEnt);
+                    }
                 }
 
                 if (!String.IsNullOrEmpty(answer))

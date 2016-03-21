@@ -74,13 +74,11 @@ namespace SkypeToTwitter
             }
         }
 
-        public static void InsertMessage(ChatMessage message)
+        public static void InsertMessage(MessageEntity message)
         {
-            MessageEntity messageEnt = new MessageEntity(message);
+            CreateTable(message.ChatID);
 
-            CreateTable(messageEnt.ChatID);
-
-            ExecuteCommand(string.Format(Constants.COMMAND_INSERT_MESSAGE, messageEnt.ChatID, messageEnt.Sender, messageEnt.Message.Replace("'", "_"), messageEnt.Timestamp));
+            ExecuteCommand(string.Format(Constants.COMMAND_INSERT_MESSAGE, message.ChatID, message.Sender, message.Message.Replace("'", "_"), message.Timestamp));
         }
 
         public static void CreateTable(String chatName)

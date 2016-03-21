@@ -26,17 +26,28 @@ namespace SkypeToTwitter
         public static string LANGUAGE_SWITCHER_MODE = "-disableLangSwitch";
         public static bool LANGUAGE_SWITCHER_MODE_ENABLED = true;
 
-        //Other constants
+        //Twitter constants
+        public static Dictionary<String, String> TWITTER_NICKS = new Dictionary<string, string>()
+        {
+            { "ddev1l1", "Дед" },
+            { "germanov.pavel", "Павло" },
+            { "sergey.yak1movich", "Серж" },
+            { "gan4in", "Пейс" },
+            { "dustazz", "Юрко" },
+        };
 
+        public static List<string> IMAGE_EXTS = new List<string>()
+        {
+            ".jpg", ".jpeg", ".gif", ".png", ".bmp"
+        };
+
+        //Other constants
         public static string DEFAULT_ANSWER = "(shake)";
         public static string HELP_DESCRIPTION = String.Format("{1}{0}{2}",
                                                               Environment.NewLine,
                                                               "- [!] в начале сообщения - не обрабатывать сообщение",
                                                               "- Погода: -w, -w [city]");
         public static string UPTIME_MESSAGE = "System UpTime: {0} Day(s) {1}:{2}:{3}";
-
-        //public static string ENGLISH_CHARS = "qwertyuiop[]asdfghjkl;'zxcvbnm,.`?/QWERTYUIOP{}ASDFGHJKL:\"ZXCVBNM<>~";
-        //public static string RUSSIAN_CHARS = "йцукенгшщзхъфывапролджэячсмитьбюё,.ЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮЁ";
 
         public static string ENGLISH_CHARS = "`qwertyuiop[]\asdfghjkl;'zxcvbnm,./~QWERTYUIOP{}|ASDFGHJKL:\"ZXCVBNM<>?!@#$^&";
         public static string RUSSIAN_CHARS = "ёйцукенгшщзхъ\\фывапролджэячсмитьбю.ЁЙЦУКЕНГШЩЗХЪ/ФЫВАПРОЛДЖЭЯЧСМИТЬБЮ,!\"№;:?";
